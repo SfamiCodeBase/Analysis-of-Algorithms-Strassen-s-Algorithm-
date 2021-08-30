@@ -1,7 +1,5 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Random;
 
 public class Simulations {
 
@@ -39,29 +37,39 @@ public class Simulations {
         StrassensAlgorithm strassensAlgorithm = new StrassensAlgorithm();
         ArrayList<Integer> sizesOfMatrices = new ArrayList<>();
         HashMap<Integer, ArrayList<Long>> durations = new HashMap<>();
-
+        System.out.println(algorithm);
         for (int i = 0; i < this.matricesSizes.size(); i++){
             ArrayList<Long> matricesOfSizeNDurations = new ArrayList<>();
             int sizeOfMatrix = this.matricesSizes.get(i);
             sizesOfMatrices.add(sizeOfMatrix);
-
             for (int j = 0; j < this.numberOfSimulations; j++){
                 System.out.println(String.format("Running simulation %s for matrix of size %s ...", j, sizeOfMatrix));
-                int[][] matrixA, matrixB, matrixC;
+                int[][] matrixA, matrixB , matrixC = null;
                 long startTime, endTime, duration;
 
                 matrixA = strassensAlgorithm.createMatrix(sizeOfMatrix, this.inputUpperBound);
                 matrixB = strassensAlgorithm.createMatrix(sizeOfMatrix, this.inputUpperBound);
-                startTime = System.currentTimeMillis();
+//                StrassensAlgorithm.printMatrix(matrixA,"matrixA " + algorithm);
+//                StrassensAlgorithm.printMatrix(matrixB,"matrixB " + algorithm);
 
+                startTime = System.currentTimeMillis();
+                if (algorithm.equals("StrassenMethodSecond")) matrixC = strassensAlgorithm.StrassenMethodSecond(matrixA, matrixB);
                 if (algorithm.equals("SquareMatrixMultiplyRecursive")) matrixC = strassensAlgorithm.SquareMatrixMultiplyRecursive(matrixA, matrixB);
-                else matrixC = strassensAlgorithm.SquareMatrixMultiply(matrixA, matrixB);
+                if (algorithm.equals("SquareMatrixMultiply")) matrixC = strassensAlgorithm.SquareMatrixMultiply(matrixA, matrixB);
                 endTime = System.currentTimeMillis();
                 duration = endTime - startTime;
+
                 matricesOfSizeNDurations.add(duration);
+//                StrassensAlgorithm.printMatrix(matrixC,"matrixC " + algorithm);
             }
             durations.put(sizeOfMatrix, matricesOfSizeNDurations);
         }
         return durations;
+    }
+
+    public void simulateAlgorithm(String algorithm, String filePath){
+        HashMap<Integer, Long> averageDurations1 = algorithmAverageRunningTime(algorithm);
+        WriteDataToCSV.writeDataAtOnce(filePath, averageDurations1);
+
     }
 }

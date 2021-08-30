@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class StrassensAlgorithm {
+public class OldCode {
 
-    public static void printMatrix(int[][] matrix, String name){
+    public void printMatrix(int[][] matrix, String name){
         System.out.println(name);
         int maxInt, maxNumberOfDigits;
 
@@ -133,6 +133,7 @@ public class StrassensAlgorithm {
 
     public int[][] SquareMatrixMultiplyRecursive(int[][] A, int[][] B){
         /* This function implements recursive square matrix multiplication */
+        System.gc();
         int n = A.length;
         int[][] C = new int[n][n];
         if (n == 1) C = SquareMatrixMultiply(A,B);
@@ -204,6 +205,10 @@ public class StrassensAlgorithm {
         return C;
     }
 
+    private static int nextPowerOfTwo(int n) {
+        int log2 = (int) Math.ceil(Math.log(n) / Math.log(2));
+        return (int) Math.pow(2, log2);
+    }
 
 
 }
