@@ -4,24 +4,25 @@ import java.util.HashMap;
 
 public class Main {
 
-    public static void simulateAlgorithm(String algorithm, ArrayList<Integer> matricesSizes,int inputUpperBound,int numberOfSimulations, String filePath){
-
-        Simulations simulations = new Simulations(matricesSizes, inputUpperBound, numberOfSimulations);
-        HashMap<Integer, Long> averageDurations1 = simulations.algorithmAverageRunningTime(algorithm);
-        WriteDataToCSV.writeDataAtOnce(filePath, averageDurations1);
-
-    }
 
     public static void main(String[] args){
-
         String filePath1 = "C:\\Users\\takal\\OneDrive\\Desktop\\Results\\simulationOneResults.csv";
         String algorithm1 = "SquareMatrixMultiply";
-        ArrayList<Integer> matricesSizes1 = new ArrayList<>(Arrays.asList(1,100,300,400,500,700,1000));
-        simulateAlgorithm(algorithm1, matricesSizes1,10,10,filePath1);
         String filePath2 = "C:\\Users\\takal\\OneDrive\\Desktop\\Results\\simulationTwoResults.csv";
         String algorithm2 = "SquareMatrixMultiplyRecursive";
-        ArrayList<Integer> matricesSizes2 = new ArrayList<>(Arrays.asList(1,100,300,400,500,700,1000));
-        simulateAlgorithm(algorithm2, matricesSizes2,5,5,filePath2);
+        String filePath3 = "C:\\Users\\takal\\OneDrive\\Desktop\\Results\\simulationThreeResults.csv";
+        String algorithm3 = "StrassenMethodSecond";
+
+        int inputUpperBound = 10;
+        int numberOfSimulations = 5;
+
+        ArrayList<Integer> matricesSizes1 = new ArrayList<>(Arrays.asList(32,64,96,128,160,320,640,1000,2000));
+        Simulations simulations;
+        simulations = new Simulations(matricesSizes1,inputUpperBound,numberOfSimulations);
+
+        simulations.simulateAlgorithm(algorithm1,filePath1);
+        simulations.simulateAlgorithm(algorithm2,filePath2);
+        simulations.simulateAlgorithm(algorithm1,filePath3);
 
     }
 
